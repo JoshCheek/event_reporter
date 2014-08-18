@@ -19,7 +19,7 @@ class IntegrationTest < Minitest::Test
       assert_includes cli.process("help"), command_name
     end
 
-    assert_includes cli.process("help queue count"), "Counts the number of items in the queue."
+    assert_includes cli.process("help queue count"), "Counts the number of items in the queue"
     assert_includes cli.process("help queue print"), "Prints each item in the queue"
   end
 
