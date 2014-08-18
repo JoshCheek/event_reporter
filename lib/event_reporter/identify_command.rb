@@ -19,7 +19,11 @@ module EventReporter
     end
 
     def queue_print?
-      name == 'queue' && arguments.first == 'print'
+      name == 'queue' && arguments == ['print']
+    end
+
+    def queue_print_by?
+      name == 'queue' && arguments.take(2) == ['print', 'by']
     end
 
     def find?

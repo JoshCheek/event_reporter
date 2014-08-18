@@ -41,4 +41,17 @@ class IdentifyCommandTest < Minitest::Test
     refute_command 'not-queue', ['print'],     :queue_print?
     refute_command 'queue',     ['not-print'], :queue_print?
   end
+
+  def test_it_identifies_queue_print_by
+    assert_command 'queue',     ['print',     'by',     'something'],     :queue_print_by?
+    assert_command 'queue',     ['print',     'by',     'something-else'],:queue_print_by?
+    refute_command 'not-queue', ['print',     'by',     'something'],     :queue_print_by?
+    refute_command 'queue',     ['not-print', 'by',     'something'],     :queue_print_by?
+    refute_command 'queue',     ['print',     'not-by', 'something'],     :queue_print_by?
+  end
+
+  def test_queue_print_and_queue_print_by_do_not_overlap
+    refute_command 'queue', ['print', 'by', 'something'], :queue_print?
+    refute_command 'queue', ['print'],                    :queue_print_by?
+  end
 end
