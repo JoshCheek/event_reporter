@@ -7,9 +7,12 @@ cli = EventReporter::CLI.new
 
 puts 'Welcome to the event reporter, type "help" if you don\'t know what to do :)'
 user_input = ""
-until user_input == 'quit' || user_input == 'exit' # really, this should get moved down into the cli, but I just want a binary for now
+loop do
   print '> '
   user_input = gets.chomp
   result     = cli.process(user_input)
+  break if :quit == result
   puts result if result
 end
+
+puts "Goodbye!"

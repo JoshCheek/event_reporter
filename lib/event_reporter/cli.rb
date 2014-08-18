@@ -39,6 +39,8 @@ module EventReporter
         help_screen
       when command.help_for_command?
         IdentifyCommand::COMMANDS_WITH_DESCRIPTIONS.fetch(arguments.join(' '))
+      when command.quit?
+        :quit # sentinal value, not sure I'm digging it, but it's an obvious thing to do that doesn't fuck up the dependencies
       end
     end
 
