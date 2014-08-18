@@ -13,11 +13,11 @@ class IdentifyCommand
     self.name, self.arguments = name, arguments
   end
 
-  def load_command?
+  def load?
     name == 'load'
   end
 
-  def queue_count_command?
+  def queue_count?
     name == 'queue' && arguments.first == 'count'
   end
 end
@@ -34,9 +34,9 @@ class CLI
     command, *arguments = line.split
     identify_command = IdentifyCommand.new(command, arguments)
     case
-    when identify_command.load_command?
+    when identify_command.load?
       self.pristine_data = ReadCsv.call arguments.first
-    when identify_command.queue_count_command?
+    when identify_command.queue_count?
       queue.count
     when command == 'queue' && arguments.first == 'clear'
       self.queue = []
