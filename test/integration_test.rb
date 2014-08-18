@@ -4,8 +4,11 @@ require_relative 'test_helper'
 # http://tutorials.jumpstartlab.com/projects/event_reporter.html
 
 class IntegrationTest < Minitest::Test
+  def cli
+    @cli ||= EventReporter::CLI.new
+  end
+
   def test_happy_path
-    cli = EventReporter::CLI.new
     cli.process "load event_attendees.csv"
     assert_equal 0, cli.process("queue count")
 
@@ -24,14 +27,15 @@ class IntegrationTest < Minitest::Test
   end
 
   def test_output
-    skip
-    # load
-    # queue count should return 0
-    # find first_name John
-    # find first_name Mary
-    # queue print should print out the 16 attendees
-    # queue print by last_name should print the same attendees sorted alphabetically by last name
-    # queue count should return 16
+    cli.process 'load'
+    assert_equal 0, cli.process('queue count')
+    cli.process 'find first_name John'
+    cli.process 'find first_name Mary'
+    assert_equal 16, cli.process('queue print')
+    to_print cli.process 'queue print by last_name'
+    # should print the same attendees sorted alphabetically by last name
+    # TODO: figure out what to assert here (should it just be marys?)
+    assert_equal 16, cli.process('queue count')
   end
 
   def test_saving
