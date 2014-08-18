@@ -1,3 +1,7 @@
-#!/usr/bin/env sh
+#!/usr/bin/env ruby
 
-bundle exec ruby -e '' -I test -r identify_command_test -r integration_test
+root_dir = File.expand_path '..', __FILE__
+Dir["#{root_dir}/**/*_test.rb"].each do |filename|
+p filename
+  require filename
+end
