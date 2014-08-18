@@ -11,12 +11,8 @@ module EventReporter
       ["PHONE"       "homephone"],
     ]
 
-    def self.call(rows, attribute_to_sort_by=nil)
-      ordered_rows = rows.sort_by.with_index do |row, index|
-        row[attribute_to_sort_by] || index
-      end
-
-      [header_line, *ordered_rows.map { |row| format_row row }]
+    def self.call(rows)
+      [header_line, *rows.map { |row| format_row row }]
     end
 
     private
