@@ -43,19 +43,19 @@ class CLI
   end
 
   def process(line)
-    command, *arguments = line.split
-    identify_command = IdentifyCommand.new(command, arguments)
+    name, *arguments = line.split
+    command = IdentifyCommand.new(name, arguments)
     case
-    when identify_command.load?
+    when command.load?
       self.pristine_data = ReadCsv.call arguments.first
-    when identify_command.queue_count?
+    when command.queue_count?
       queue.count
-    when identify_command.queue_clear?
+    when command.queue_clear?
       self.queue = []
-    when identify_command.find?
+    when command.find?
       attribute, value = arguments
       self.queue = pristine_data.select { |row| row[attribute] == value }
-    when identify_command.help?
+    when command.help?
       help_screen
     end
   end
