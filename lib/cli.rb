@@ -6,6 +6,18 @@ class ReadCsv
   end
 end
 
+class IdentifyCommand
+  attr_accessor :name, :arguments
+
+  def initialize(name, arguments)
+    self.name, self.arguments = name, arguments
+  end
+
+  def load_command?
+    name == 'load'
+  end
+end
+
 class CLI
   attr_accessor :queue, :pristine_data
 
@@ -16,19 +28,20 @@ class CLI
 
   def process(line)
     command, *arguments = line.split
-    case command
-    when 'load'
+    identify_command = IdentifyCommand.new(command, arguments)
+    case
+    when identify_command.load_command?
       self.pristine_data = ReadCsv.call arguments.first
-    when 'queue'
+    when command == 'queue'
       if arguments.first == 'count'
         queue.count
       elsif arguments.first == 'clear'
         self.queue = []
       end
-    when 'find'
+    when command == 'find'
       attribute, value = arguments
       self.queue = pristine_data.select { |row| row[attribute] == value }
-    when 'help'
+    when command == 'help'
       help_screen
     end
   end
