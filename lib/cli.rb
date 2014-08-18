@@ -23,6 +23,11 @@ class CLI
       if arguments.first == 'count'
         queue.count
       end
+    when 'find'
+      attribute, value = arguments
+      require "pry"
+      binding.pry
+      self.queue = pristine_data.select { |row| row[attribute] == value }
     end
   end
 end
