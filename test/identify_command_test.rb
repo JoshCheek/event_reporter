@@ -50,8 +50,30 @@ class IdentifyCommandTest < Minitest::Test
     refute_command 'queue',     ['print',     'not-by', 'something'],     :queue_print_by?
   end
 
-  def test_queue_print_and_queue_print_by_do_not_overlap
+  def test_queue_print_and_queue_print_by_are_mutually_exclusive
     refute_command 'queue', ['print', 'by', 'something'], :queue_print?
     refute_command 'queue', ['print'],                    :queue_print_by?
+  end
+
+  def test_it_identifies_help_for_a_command
+    assert_command 'help',     ['load'], :help_for_command?
+    assert_command 'help',     ['help'], :help_for_command?
+    refute_command 'not-help', ['load'], :help_for_command?
+  end
+
+  def test_it_considers_all_arguments_as_part_of_the_command_name_in_help_for_a_command
+    assert_command 'help', ['queue',     'clear'],     :help_for_command?
+    refute_command 'help', ['not-queue', 'clear'],     :help_for_command?
+    refute_command 'help', ['queue',     'not-clear'], :help_for_command?
+  end
+
+  def test_it_is_not_help_for_a_command_if_the_first_argument_is_not_a_command
+    assert_command 'help', ['load'],     :help_for_command?
+    refute_command 'help', ['not-load'], :help_for_command?
+  end
+
+  def test_help_and_help_command_are_mutually_exclusive
+    refute_command 'help', ['load'], :help?
+    refute_command 'help', [],       :help_for_command?
   end
 end
