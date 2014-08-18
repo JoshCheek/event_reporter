@@ -15,10 +15,9 @@ class IdentifyCommandTest < Minitest::Test
   end
 
   def test_it_identifies_queue_count
-    skip
-    assert cli.queue_count_command?('queue',     ['count'])
-    refute cli.queue_count_command?('queue',     ['not-count'])
-    refute cli.queue_count_command?('not-queue', ['count'])
+    assert_command 'queue',     ['count'],     :queue_count_command?
+    refute_command 'queue',     ['not-count'], :queue_count_command?
+    refute_command 'not-queue', ['count'],     :queue_count_command?
   end
 
   def test_it_identifies_queue_clear
