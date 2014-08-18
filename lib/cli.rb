@@ -24,6 +24,14 @@ class IdentifyCommand
   def queue_clear?
     name == 'queue' && arguments.first == 'clear'
   end
+
+  def find?
+    name == 'find'
+  end
+
+  def help?
+    name == 'help'
+  end
 end
 
 class CLI
@@ -44,10 +52,10 @@ class CLI
       queue.count
     when identify_command.queue_clear?
       self.queue = []
-    when command == 'find'
+    when identify_command.find?
       attribute, value = arguments
       self.queue = pristine_data.select { |row| row[attribute] == value }
-    when command == 'help'
+    when identify_command.help?
       help_screen
     end
   end
