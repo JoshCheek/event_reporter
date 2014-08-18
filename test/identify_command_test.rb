@@ -2,11 +2,11 @@ require_relative 'test_helper'
 
 class IdentifyCommandTest < Minitest::Test
   def assert_command(name, arguments, command_predicate)
-    assert_predicate IdentifyCommand.new(name, arguments), command_predicate
+    assert_predicate EventReporter::IdentifyCommand.new(name, arguments), command_predicate
   end
 
   def refute_command(name, arguments, command_predicate)
-    refute_predicate IdentifyCommand.new(name, arguments), command_predicate
+    refute_predicate EventReporter::IdentifyCommand.new(name, arguments), command_predicate
   end
 
   def test_it_identifies_load

@@ -5,7 +5,7 @@ require_relative 'test_helper'
 
 class IntegrationTest < Minitest::Test
   def test_happy_path
-    cli = CLI.new
+    cli = EventReporter::CLI.new
     cli.process "load event_attendees.csv"
     assert_equal 0, cli.process("queue count")
 
