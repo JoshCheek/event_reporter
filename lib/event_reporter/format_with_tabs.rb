@@ -8,7 +8,7 @@ module EventReporter
       ["CITY",       "city"],
       ["STATE",      "state"],
       ["ADDRESS",    "street"],
-      ["PHONE"       "homephone"],
+      ["PHONE",      "homephone"],
     ]
 
     def self.call(rows)

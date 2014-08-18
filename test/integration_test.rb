@@ -37,7 +37,7 @@ class IntegrationTest < Minitest::Test
     # 17 lines, first looks like the header we expect
     lines_to_print = cli.process('queue print')
     assert_equal 17, lines_to_print.size # header + 16 rows
-    assert_includes lines_to_print.first, "LAST NAME\tFIRST NAME\tEMAIL\tZIPCODE\tCITY\tSTATE\tADDRESS\tPHONE"
+    assert_equal lines_to_print.first, "LAST NAME\tFIRST NAME\tEMAIL\tZIPCODE\tCITY\tSTATE\tADDRESS\tPHONE"
 
 
     # output is not sorted by last name
