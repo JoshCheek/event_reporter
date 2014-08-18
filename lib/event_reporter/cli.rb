@@ -1,5 +1,5 @@
-require 'read_csv'
-require 'identify_command'
+require 'event_reporter/read_csv'
+require 'event_reporter/identify_command'
 
 class CLI
   attr_accessor :queue, :pristine_data

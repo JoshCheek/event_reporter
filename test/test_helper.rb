@@ -10,4 +10,4 @@ require 'minitest/pride'
 #    "/Users/josh/code/my_event_reporter/lib"
 lib_directory = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH.unshift lib_directory
-require 'cli'
+require 'event_reporter/cli'
