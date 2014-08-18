@@ -16,6 +16,10 @@ class IdentifyCommand
   def load_command?
     name == 'load'
   end
+
+  def queue_count_command?
+    name == 'queue' && arguments.first == 'count'
+  end
 end
 
 class CLI
@@ -32,12 +36,10 @@ class CLI
     case
     when identify_command.load_command?
       self.pristine_data = ReadCsv.call arguments.first
-    when command == 'queue'
-      if arguments.first == 'count'
-        queue.count
-      elsif arguments.first == 'clear'
-        self.queue = []
-      end
+    when identify_command.queue_count_command?
+      queue.count
+    when command == 'queue' && arguments.first == 'clear'
+      self.queue = []
     when command == 'find'
       attribute, value = arguments
       self.queue = pristine_data.select { |row| row[attribute] == value }
