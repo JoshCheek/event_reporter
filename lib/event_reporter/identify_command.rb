@@ -1,13 +1,14 @@
 module EventReporter
   class IdentifyCommand
     COMMANDS_WITH_DESCRIPTIONS = {
-      'load'         => 'Loads a CSV to be searched through',
-      'find'         => 'Selects relevant rows from the loaded CSV into the queue',
-      'help'         => 'Information about all commands',
-      'help command' => 'Information about a command',
-      'queue clear'  => 'Clears out the current queue',
-      'queue count'  => 'Counts the number of items in the queue',
-      'queue print'  => 'Prints each item in the queue',
+      'load'           => 'Loads a CSV to be searched through',
+      'find'           => 'Selects relevant rows from the loaded CSV into the queue',
+      'help'           => 'Information about all commands',
+      'help <command>' => 'Information about a command',
+      'queue clear'    => 'Clears out the current queue',
+      'queue count'    => 'Counts the number of items in the queue',
+      'queue print'    => 'Prints each item in the queue',
+      'queue print by' => 'Prints each item in the queue, sorted by the provided attribute',
     }
 
     attr_accessor :name, :arguments

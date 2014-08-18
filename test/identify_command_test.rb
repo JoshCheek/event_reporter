@@ -9,40 +9,39 @@ class IdentifyCommandTest < Minitest::Test
     refute_predicate EventReporter::IdentifyCommand.new(name, arguments), command_predicate
   end
 
+  def assert_known_command(command_name)
+    EventReporter::IdentifyCommand::COMMANDS_WITH_DESCRIPTIONS.fetch command_name
+  end
+
   def test_it_identifies_load
+    assert_known_command 'load'
     assert_command 'load',     ['somefile'], :load?
     refute_command 'not-load', ['somefile'], :load?
   end
 
   def test_it_identifies_queue_count
+    assert_known_command 'queue count'
     assert_command 'queue',     ['count'],     :queue_count?
     refute_command 'queue',     ['not-count'], :queue_count?
     refute_command 'not-queue', ['count'],     :queue_count?
   end
 
   def test_it_identifies_queue_clear
+    assert_known_command 'queue clear'
     assert_command 'queue',     ['clear'],     :queue_clear?
     refute_command 'queue',     ['not-clear'], :queue_clear?
     refute_command 'not-queue', ['clear'],     :queue_clear?
   end
 
-  def test_it_identifies_find
-    assert_command 'find', [],     :find?
-    refute_command 'not-find', [], :find?
-  end
-
-  def test_it_identifies_help
-    assert_command 'help', [],     :help?
-    refute_command 'not-help', [], :help?
-  end
-
   def test_it_identifies_queue_print
+    assert_known_command 'queue print'
     assert_command 'queue',     ['print'],     :queue_print?
     refute_command 'not-queue', ['print'],     :queue_print?
     refute_command 'queue',     ['not-print'], :queue_print?
   end
 
   def test_it_identifies_queue_print_by
+    assert_known_command 'queue print by'
     assert_command 'queue',     ['print',     'by',     'something'],     :queue_print_by?
     assert_command 'queue',     ['print',     'by',     'something-else'],:queue_print_by?
     refute_command 'not-queue', ['print',     'by',     'something'],     :queue_print_by?
@@ -53,6 +52,18 @@ class IdentifyCommandTest < Minitest::Test
   def test_queue_print_and_queue_print_by_are_mutually_exclusive
     refute_command 'queue', ['print', 'by', 'something'], :queue_print?
     refute_command 'queue', ['print'],                    :queue_print_by?
+  end
+
+  def test_it_identifies_find
+    assert_known_command 'find'
+    assert_command 'find', [],     :find?
+    refute_command 'not-find', [], :find?
+  end
+
+  def test_it_identifies_help
+    assert_known_command 'help'
+    assert_command 'help', [],     :help?
+    refute_command 'not-help', [], :help?
   end
 
   def test_it_identifies_help_for_a_command
