@@ -27,7 +27,7 @@ module EventReporter
         FormatWithTabs.call queue.sort_by { |row| row[arguments.last] }
       when command.find?
         attribute, value = arguments
-        self.queue = pristine_data.select { |row| row[attribute] == value }
+        self.queue = pristine_data.select { |row| row[attribute].downcase == value.downcase }
       when command.help?
         help_screen
       end
