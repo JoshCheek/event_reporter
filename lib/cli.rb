@@ -20,6 +20,10 @@ class IdentifyCommand
   def queue_count?
     name == 'queue' && arguments.first == 'count'
   end
+
+  def queue_clear?
+    name == 'queue' && arguments.first == 'clear'
+  end
 end
 
 class CLI
@@ -38,7 +42,7 @@ class CLI
       self.pristine_data = ReadCsv.call arguments.first
     when identify_command.queue_count?
       queue.count
-    when command == 'queue' && arguments.first == 'clear'
+    when identify_command.queue_clear?
       self.queue = []
     when command == 'find'
       attribute, value = arguments

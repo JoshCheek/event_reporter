@@ -21,10 +21,9 @@ class IdentifyCommandTest < Minitest::Test
   end
 
   def test_it_identifies_queue_clear
-    skip
-    assert cli.queue_clear_command?('queue',     ['clear'])
-    refute cli.queue_clear_command?('queue',     ['not-clear'])
-    refute cli.queue_clear_command?('not-queue', ['clear'])
+    assert_command 'queue',     ['clear'],     :queue_clear?
+    refute_command 'queue',     ['not-clear'], :queue_clear?
+    refute_command 'not-queue', ['clear'],     :queue_clear?
   end
 
   def test_it_identifies_find_commands
