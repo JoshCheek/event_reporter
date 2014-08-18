@@ -5,18 +5,26 @@ require_relative 'test_helper'
 
 class IntegrationTest < Minitest::Test
   def test_happy_path
-    # load event_attendees.csv
-    # queue count should return 0
-    # find first_name John
-    # queue count should return 63
-    # queue clear
-    # queue count should return 0
-    # help should list the commands
-    # help queue count should explain the queue count function
-    # help queue print should explain the printing function
+    cli = CLI.new(stdin, stdout)
+    cli.process "load event_attendees.csv"
+    assert_equal 0, cli.process("queue count")
+
+    cli.process("find first_name John")
+    assert_equal 63, cli.process("queue count")
+
+    cli.process("queue clear")
+    assert_equal 0, cli.process("queue count")
+
+    %w[load find queue help].each do |command_name|
+      assert_includes cli.process("help"), command_name
+    end
+
+    assert_includes cli.process("help queue count"), "Counts the number of items in the queue."
+    assert_includes cli.process("help queue print"), "Prints each item in the queue"
   end
 
   def test_output
+    skip
     # load
     # queue count should return 0
     # find first_name John
@@ -27,6 +35,7 @@ class IntegrationTest < Minitest::Test
   end
 
   def test_saving
+    skip
     # load
     # find city Salt Lake City
     # queue print should display 13 attendees
@@ -39,6 +48,7 @@ class IntegrationTest < Minitest::Test
   end
 
   def test_reading_data
+    skip
     # load
     # find state MD
     # queue save to state_sample.csv
@@ -52,6 +62,7 @@ class IntegrationTest < Minitest::Test
   end
 
   def test_emptiness
+    skip
     # Note that this set intentionally has no call to load:
 
     # find last_name Johnson
