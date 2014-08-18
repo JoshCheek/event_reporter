@@ -27,19 +27,26 @@ class IntegrationTest < Minitest::Test
   end
 
   def test_output
+    # filter, and then re-filter the data for "Mary"s
     cli.process 'load'
     assert_equal 0, cli.process('queue count')
     cli.process 'find first_name John'
     cli.process 'find first_name Mary'
+
+    # 17 lines, first looks like the header we expect
     lines_to_print = cli.process('queue print')
     assert_equal 17, lines_to_print.size # header + 16 rows
-    assert_includes lines_to_print.first, "LAST NAME\tFIRST NAME\tEMAIL\tZIPCODE\tCITY\tSTATE\tADDRESS\tPHONE" # first line looks like the header we expect
-    printed = cli.process 'queue print by last_name'
-    require "pry"
-    binding.pry
-    # should print the same attendees sorted alphabetically by last name
-    # TODO: figure out what to assert here (should it just be marys?)
-    assert_equal 16, cli.process('queue count')
+    assert_includes lines_to_print.first, "LAST NAME\tFIRST NAME\tEMAIL\tZIPCODE\tCITY\tSTATE\tADDRESS\tPHONE"
+
+
+    # output is not sorted by last name
+    alphabetical_last_names = ["Bastias", "Bell", "Browne", "Campbell", "Coomer", "Corrado", "Costantini", "Grant", "Gray", "Jolly", "Joyce", "Rodgers", "Schuster", "Shpino", "Skaggs", "Ther"]
+    unsorted_last_names = cli.process('queue print').drop(1).map { |row| row.split("\t").first }
+    refute_equal unsorted_last_names, alphabetical_last_names
+
+    # output is sorted by last name
+    sorted_last_names = cli.process('queue print by last_name').drop(1).map { |row| row.split("\t").first }
+    assert_equal sorted_last_names, alphabetical_last_names
   end
 
   def test_saving
