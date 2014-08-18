@@ -47,6 +47,7 @@ Process to solve this:
 
 ## Other things I noticed as I went through the problem
 
+* **Test behaviour, not interfaces**
 * **Make test as independent of presentation as possible.**
   In your brain you have an idea like "Mary's data is the first printed",
   identify how little you can assert about the printed string and still be confident
@@ -65,7 +66,7 @@ Process to solve this:
   E.g. reqs around commands increased and become more complex,
   I wound up depending more on CommandIdentifier
   creating a object to handle this knowledge and decision making
-* **FakeFS** is like StringIO for the file system.
+* **FakeFS** is like StringIO for the file system ([homepage](https://github.com/defunkt/fakefs)).
 
 ## License
 
