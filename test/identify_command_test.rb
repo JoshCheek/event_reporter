@@ -87,4 +87,10 @@ class IdentifyCommandTest < Minitest::Test
     refute_command 'help', ['load'], :help?
     refute_command 'help', [],       :help_for_command?
   end
+
+  def test_it_identifies_quit
+    assert_known_command 'quit'
+    assert_command 'quit',     [], :quit?
+    refute_command 'not-quit', [], :quit?
+  end
 end

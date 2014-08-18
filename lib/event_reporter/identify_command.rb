@@ -9,6 +9,7 @@ module EventReporter
       'queue count'    => 'Counts the number of items in the queue',
       'queue print'    => 'Prints each item in the queue',
       'queue print by' => 'Prints each item in the queue, sorted by the provided attribute',
+      'quit'           => 'Quit/exit the program',
     }
 
     attr_accessor :name, :arguments
@@ -47,6 +48,10 @@ module EventReporter
 
     def help_for_command?
       name == 'help' && COMMANDS_WITH_DESCRIPTIONS.key?(arguments.join(' '))
+    end
+
+    def quit?
+      name == 'quit'
     end
   end
 end
