@@ -24,7 +24,7 @@ module EventReporter
       when command.queue_print?
         FormatWithTabs.call queue
       when command.queue_print_by?
-        FormatWithTabs.call queue.sort_by { |row| row[arguments.last] }
+        FormatWithTabs.call queue, arguments.last
       when command.find?
         attribute, value = arguments
         self.queue = pristine_data.select { |row| row[attribute] == value }
