@@ -1,9 +1,17 @@
 require_relative 'test_helper'
 
 class IdentifyCommandTest < Minitest::Test
+  def assert_command(name, arguments, command_predicate)
+    assert_predicate IdentifyCommand.new(name, arguments), command_predicate
+  end
+
+  def refute_command(name, arguments, command_predicate)
+    refute_predicate IdentifyCommand.new(name, arguments), command_predicate
+  end
+
   def test_it_identifies_load
-    assert_predicate IdentifyCommand.new('load',     ['somefile']).load_command?
-    refute_predicate IdentifyCommand.new('not-load', ['somefile']).load_command?
+    assert_command 'load',     ['somefile'], :load_command?
+    refute_command 'not-load', ['somefile'], :load_command?
   end
 
   def test_it_identifies_queue_count
