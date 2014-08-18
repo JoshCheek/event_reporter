@@ -26,13 +26,19 @@ class IdentifyCommandTest < Minitest::Test
     refute_command 'not-queue', ['clear'],     :queue_clear?
   end
 
-  def test_it_identifies_find_commands
+  def test_it_identifies_find
     assert_command 'find', [],     :find?
     refute_command 'not-find', [], :find?
   end
 
-  def test_it_identifies_help_commands
+  def test_it_identifies_help
     assert_command 'help', [],     :help?
     refute_command 'not-help', [], :help?
+  end
+
+  def test_it_identifies_queue_print
+    assert_command 'queue',     ['print'],     :queue_print?
+    refute_command 'not-queue', ['print'],     :queue_print?
+    refute_command 'queue',     ['not-print'], :queue_print?
   end
 end

@@ -31,8 +31,12 @@ class IntegrationTest < Minitest::Test
     assert_equal 0, cli.process('queue count')
     cli.process 'find first_name John'
     cli.process 'find first_name Mary'
-    assert_equal 16, cli.process('queue print')
-    to_print cli.process 'queue print by last_name'
+    lines_to_print = cli.process('queue print')
+    assert_equal 17, lines_to_print.size # header + 16 rows
+    assert_includes lines_to_print.first, "LAST NAME\tFIRST NAME\tEMAIL\tZIPCODE\tCITY\tSTATE\tADDRESS\tPHONE" # first line looks like the header we expect
+    printed = cli.process 'queue print by last_name'
+    require "pry"
+    binding.pry
     # should print the same attendees sorted alphabetically by last name
     # TODO: figure out what to assert here (should it just be marys?)
     assert_equal 16, cli.process('queue count')
