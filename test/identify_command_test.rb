@@ -27,10 +27,12 @@ class IdentifyCommandTest < Minitest::Test
   end
 
   def test_it_identifies_find_commands
-    skip
+    assert_command 'find', [],     :find?
+    refute_command 'not-find', [], :find?
   end
 
   def test_it_identifies_help_commands
-    skip
+    assert_command 'help', [],     :help?
+    refute_command 'not-help', [], :help?
   end
 end
