@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+require 'event_reporter/cli'
+
+cli = EventReporter::CLI.new
+
+puts 'Welcome to the event reporter, type "help" if you don\'t know what to do :)'
+user_input = ""
+until user_input == 'quit' || user_input == 'exit' # really, this should get moved down into the cli, but I just want a binary for now
+  print '> '
+  user_input = gets.chomp
+  result     = cli.process(user_input)
+  puts result if result
+end

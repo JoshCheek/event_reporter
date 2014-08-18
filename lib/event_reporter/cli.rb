@@ -11,6 +11,13 @@ module EventReporter
       self.pristine_data = []
     end
 
+    # I'm thinking about the name "CLI", and whether this class is *really* a CLI
+    # we already know it's not talking to streams, so maybe the thing that sits above it
+    # should become an object, and *that* thing is the real CLI.
+    #
+    # To do this, I would pass in "command" rather than "line", (the thing above it would read the line, split it, turn it into a command)
+    # And so command would need to also know which argument corresponds to the filename and the attribute_to_sort_by, etc
+    # And the FormatWithTabs would move up to the caller, as well, this class would simply return the rows to print
     def process(line)
       name, *arguments = line.split
       command = IdentifyCommand.new(name, arguments)
@@ -35,7 +42,7 @@ module EventReporter
 
     def help_screen
       commands_with_descriptions.map { |command, description|
-        sprintf "%20s %s", command, description
+        command.ljust(15, '.') + description
       }.join("\n")
     end
 

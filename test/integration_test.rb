@@ -50,7 +50,6 @@ class IntegrationTest < Minitest::Test
   end
 
   def test_saving
-    skip
     # load
     # find city Salt Lake City
     # queue print should display 13 attendees
