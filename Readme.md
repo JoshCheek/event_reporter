@@ -45,6 +45,49 @@ Process to solve this:
   - What is the responsibility (things that it does or things that it knows) or reference (thing that it talks to) that is causing it have this bad dependency?
   - Invert the arrow by moving the knowledge or the reference to the other side.
 
+## Student issues that were brought up in class
+
+Test difficulties on Event Reporter
+* Integration testing seems vague,
+  the line between unit and integration becomes unclear.
+  - unit: code (class/classes/method) which can be taken independently from the system
+  - if unit depends on the world, it's integration test
+  - integration tests are:
+    * big
+    * have to fake out the world
+    * hard to write
+    * sloooooooow
+  - how to draw the lines between them?
+    * integration:
+      - think about big concepts
+      - make few of these
+      - purpose: show that all those units that I unit tested do, in fact, work together
+    * unit:
+      - all the inputs
+      - conditionals
+      - edge cases
+      - of this one contained thing
+  - At the end of the day, this is all made-up constructs, just make sure you have confidence in your tests.
+* Testing the CLI: Do we do `respond_to?` (doesn't say much)
+  or assert the string that comes back? (volatile and difficult)
+  - we have these issues because we are mocking low-level global ideas (stdin/stdout)
+  - instead, attempt to pull these higher up, to the caller, so we can interact in richer easier ways
+* Tests were not viable when we went to implement.
+  - I need to see specific examples to know how to help with this one
+* What tests do I write? Difficulty starting w/ a test b/c
+  don't know what to put.
+  - When you really don't know what should happen, go implement a shitty toy version
+  - This should help you gain some context about what it needs to do and to talk to
+  - Then delete that, and use your new understanding to write the responsibilities (in English, the way you would describe it to another student)
+  - Now, turn each of the ideas in the English version into a test (replace spaces with underscores, put `def test_` in front of it)
+* Can write a test if I have ability to test all the interactions
+  But there's a whole big world out there, and how do I get into
+  the middle of it?
+  - Pull the whole big world as high as possible
+  - These high-level objects just compose the lower level objects
+  - The lower level objects can have more focused testing on them
+  - The higher level objects get a small number of large expensive tests, primarily just to prove that everything works together (integration)
+
 ## Other things I noticed as I went through the problem
 
 * **Test behaviour, not interfaces**
